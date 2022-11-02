@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESP</title>
+<script>
+setButtonImage("https://sukiio.com/i/2022/09/05/xeecx.png");
+</script>
+        120FPS
+    </script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+body {
+    background: transparent;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*菜单*/
+*:not(input, checkbox, textarea) {
+    /*禁止文本选择*/
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Non-prefixed version, currently */
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height:  20px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #e2e2e2;
+  border-radius: 10px;
+  border: 0px solid #010101;
+}
+
+.popup_container {
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    top: 0;
+}
+
+#H5AlertView {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    left: -70px;
+    top: 20px;
+    text-align: center;
+    zoom: 0.8;
+}
+
+#title-text {
+    padding-top: 0px;
+    font-size: 18px;
+    color: #f00;
+}
+#content-text {
+padding-top: 0px;
+    font-size: 12px;
+    color: #f00;
+}
+
+#info-text {
+    padding: 10px;
+    color: #494949;
+}
+
+#content-view {
+    z-index: 0;
+    background: #fff;
+    position: relative;
+    top: 0px;
+    border: 1px solid #E8E8E8;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+button {
+    width: 100%;
+    height: 40px;
+    color: #fff;
+    background-color: #23B574;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    padding: 0 8px;
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+button:active {
+    background-color: #007E40;
+    transform: translateY(2px);
+}
+}
+  input[type=text] ::-webkit-text-fill-color:#fff;
+       .el-scrollbar .el-scrollbar__bar {
+height:14px;
+            opacity: 1 !important;
+        }
+  input[type=range]::-webkit-slider-thumb {
+    width: 20px;	height: 20px;
+border-radius:35%;
+    background-color:#fff;
+border-color:#d900ff;
+  
+  background: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -1px;
+  }
+  .switch-btn {
+  cursor: pointer;
+  width: 45px;
+  height: 28px;
+  position: relative;
+  border: 1px solid #dfdfdf;
+  background-color: #fdfdfd;
+  box-shadow: #dfdfdf 0 0 0 0 inset;
+  border-radius: 15px;
+  background-clip: content-box;
+  display: inline-block;
+  -webkit-appearance: none;
+  user-select: none;
+  outline: none; 
+}
+.switch-btn:before {
+    content: '';
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    background-color: #d900ff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4); 
+}
+.switch-btn:checked {
+    border-color: #d900ff;
+    box-shadow: #00ff33 16px inset;
+    background-color: #22ff00; 
+}
+.switch-btn:checked:before {
+    left: 18px; 
+}
+.switch-btn.switch-btn-animbg {
+    transition: background-color ease .4s; 
+}
+.switch-btn.switch-btn-animbg:before {
+    transition: left .3s; 
+}
+.switch-btn.switch-btn-animbg:checked {
+    box-shadow: #dfdfdf 0 0 0 0 inset;
+    background-color: white;
+    transition: border-color .4s, background-color ease .4s; 
+}
+.switch-btn.switch-btn-animbg:checked:before {
+    transition: left .3s; 
+}
+  /* FULL THANH CUỘN */
+
+.scrollbar {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.scrollbar::-webkit-scrollbar {
+    width: 0px; /* CHIỀU RỘNG THANH CUỘN DỌC */
+    height: 5px;/* CHIỀU CAO THANH CUỘN NGANG */
+    background-color: #F5F5F5; /* MÀU NỀN CUỘN，一PHỦ */
+}
+/* THANH CUỘN THEO DÕI（CHUAThumb） */
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); /* BÓNG THEO DÕI THANH CUỘN */
+    /*border-radius: 10px; /* GÓC TRÒN */
+    background-color: #000; /* NỀN */
+}
+/* 滚动条里面的滑块 */
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 15px; /* 滚动条滑块圆角 */
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); /* 滚动条滑块阴影 */
+    background-color: #000; /* 滚动条滑块颜色 */
+}
+  *:not(input, checkbox, textarea) {
+            /*禁止文本选择*/
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+
+</style>
+<body bgcolor="#F0F0F0">
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.min.js"></script>
+
+
+<div id="app">
+		<div :class="!ifshow?'onlyTitle ayimgui':'ayimgui'" ref="menuMain">
+			<div class="aytitle" @touchstart="titleTouchStart" @touchmove="titleTouchMove">
+				
+
+
+</div>
+
+
+
+</head>
+
+<body>
+<!--悬浮菜单-->
+<div class="popup_container">
+<div id="H5AlertView">
+<script>
+function draw(fps) {
+    window.draw_state = 1;
+    alert("Activate");
+}
+
+function unDraw() {
+    clearCtx();
+    window.draw_state = 0;
+    setTimeout(function(){alert("Deactivate")},100);
+}
+
+function hideMenu() {
+    var menu = document.querySelector("#H5AlertView");
+    menu.style.display = 'none';
+
+    //隐藏菜单之后, 设置触控穿透悬浮窗口
+    setWindowTouch(false);
+}
+</script>
+<div id="content-view">
+<div id="title-text">屠龙少年</div>
+
+<div v-show="tabValue === 'one'">
+
+  
+  <details type="menu"open>
+  <summary style="background-color: #B8D1F2">参数设置</summary>
+  
+   
+ <input type="range" id="slider5" min="1" max="20" step="0.001" value="1" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+             font-weight: 550;    ">游戏亮度</front>
+<span id="numvalue5" class="slidercenter" >1.000</span>   
+    
+<input type="range" id="slider1" min="1" max="6" step="0.001" value="1" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+    font-weight: 550;          ">全局加速</front>
+<span id="numvalue1" class="slidercenter" >1.000</span>
+    
+
+<input type="range" id="slider2" min="1" max="6" step="0.001" value="1" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+            font-weight: 550;     ">单体加速</front>
+<span id="numvalue2" class="slidercenter" >1.000</span>
+
+<input type="range" id="slider3" min="0.75" max="1.75" step="0.001" value="1.25" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+           font-weight: 550;      ">人物视角</front>
+<span id="numvalue3" class="slidercenter" >1.250</span>
+
+<input type="range" id="slider4" min="1" max="50" step="0.001" value="1" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+             font-weight: 550;    ">人物视距</front>
+<span id="numvalue4" class="slidercenter" >1.000</span>
+    FPS
+     <input type="range" id="slider7"min="1" max="120" style="width:100%" step="0.001" value="60"
+                       onchange="fpss(this)" />
+
+  
+ENEMY HETGHT角色高度
+<br>
+
+                <input type="range" id="slider9" min="-375" max="375"style="width:100%"  step="0.001" value="0"
+onchange="PlayerHeight(this)"/>
+
+            <script>
+function PlayerHeight(input) {
+                if (typeof addr999 === "undefined") {
+                    h5gg.clearResults();
+                    h5gg.searchNumber("-88.02314", "F32", "0x00000000", "0x200000000");
+                    h5gg.getResults("100", "0", "F32");
+                    count999 = h5gg.getResultsCount();
+                    r999 = h5gg.getResults(count999);
+                    for (var i = 0; i < count999; i++) {
+                        addr999 = r999[i].address;
+                        h5gg.setValue(addr999, input.value / 1, "F32");
+                        h5gg.clearResults();
+                    }
+                } else {
+                    for (var i = 0; i < count999; i++) {
+                        addr999 = r999[i].address;
+                        h5gg.setValue(addr999, input.value / 1, "F32");
+                    }
+                }
+            }
+</script>
+    
+
+ </details>
+      <div v-show="tabValue === 'one'">
+<div class="aytext">
+  <details type="menu"    >
+     
+       <summary style="background-color: #B8D1F2">基础功能</summary>
+
+     
+       
+<div class="mycheckbox">
+<input type="button" value="画质优化" style='height:35px;width:200px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="huazhi66()">
+<input type="button" value="一键天亮" style='height:35px;width:200px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="yjtl()">
+
+
+  <input type="button" value="LOCK FPS锁定F PS" style=height:28px onclick="anniufps()">
+<input type="button" value="身体颜色" style=height:28px onclick="anniu62()">
+<input type="button" value="头发颜色 "style=height:28px  onclick="anniu6()">
+
+   <input type="button" value=" RPG SPAM速射 " style=height:28px onclick=" rpgspam()">
+     
+     
+     <input type="button" value="草石透视 "style=height:28px  onclick="toushi1()">
+  <input type="button" value="地面透视 "style=height:28px  onclick="toushi2()">
+   <input type="button" value="水中透视 "style=height:28px  onclick="toushi4()">
+<br>
+  <input type="button" value="99连发" style='height:35px;width:200px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="nb666()">
+  </div>
+
+
+      </details>
+
+  
+</div>
+</div>
+</div>
+  
+
+
+<div v-show="tabValue === 'one'">
+
+  
+
+
+
+
+    <details type="menu"  open  >
+     
+       <summary style="background-color: #b8d1f2">最强单兵</summary>
+<div class="mycheckbox">
+<input id="check2" value="1" type="checkbox" onclick="waterf()" ><label for="check2">水下开火</label>
+  
+  <input id="check1" value="1" type="checkbox" onclick="bulletfly()" ><label for="check1">子弹追踪</label>
+  <label><input class="switch-btn switch-btn animbg"type="checkbox"onclick="dat3(this)">大头</label><span style=color:transparent;>@</span>
+  
+SIMPLE PISTOL SPEED简单手枪速度
+<br>
+                <input type="range" id="slider9" min="0.001" max="1"style="width:80%"  step="0.001" value="1"
+onchange="PISTOLSPEED(this)"/>
+
+            <script>
+function PISTOLSPEED(inputq) {
+if (typeof addr21 === 'undefined') {
+  h5gg.clearResults();
+h5gg.searchNumber("-2.5625", 'F32', '0x00000000', '0x200000000');
+                      h5gg.searchNearby("0.475", 'F32', '0x100');
+h5gg.searchNumber("0.475", 'F32', '0x00000000', '0x200000000');
+                            h5gg.getResults('0.001','1','F32');
+                            count21 = h5gg.getResultsCount();
+                            r21 = h5gg.getResults(count21);
+                            for (var i = 0; i < count21; i++) {
+                                addr21 = r21[i].address;
+                              h5gg.setValue(addr21, inputq.value, 'F32');
+  h5gg.clearResults()
+                            }
+                     }
+                      else{
+           
+                            
+                        
+                                h5gg.setValue(addr21, inputq.value, 'F32');
+                                
+                            }
+      
+                     };
+</script>
+<br>
+FABRI SNIPE SPEED  法布里狙击速度
+<br>
+                <input type="range" id="slider9" min="0.001" max="1"style="width:80%"  step="0.001" value="1"
+onchange="SNIPESPEED(this)"/>
+
+            <script>
+function SNIPESPEED(inputq) {
+if (typeof addr31 === 'undefined') {
+  h5gg.clearResults();
+h5gg.searchNumber("-2.5625", 'F32', '0x00000000', '0x200000000');
+                   h5gg.searchNearby("0.3", 'F32', '0x100');
+h5gg.searchNumber("0.3", 'F32', '0x00000000', '0x200000000');
+                            h5gg.getResults('1', 'F32');
+                            count31 = h5gg.getResultsCount();
+                            r31 = h5gg.getResults(count31);
+                            for (var i = 0; i < count31; i++) {
+                                addr31 = r31[i].address;
+                              h5gg.setValue(addr31, inputq.value, 'F32');
+  h5gg.clearResults()
+                            }
+                     }
+                      else{
+           
+                            
+                        
+                                h5gg.setValue(addr31, inputq.value, 'F32');
+                                
+                            }
+      
+                     };
+</script>
+<br>
+RIFLE SPEED步枪速度
+<br>
+                <input type="range" id="slider9" min="0.001" max="1"style="width:80%"  step="0.001" value="1"
+onchange="RIFLESPEED(this)"/>
+
+            <script>
+function RIFLESPEED(inputq) {
+if (typeof addr31 === 'undefined') {
+  h5gg.clearResults();
+h5gg.searchNumber("-2.5625", 'F32', '0x00000000', '0x200000000');
+                  h5gg.searchNearby("0.1", 'F32', '0x100');
+h5gg.searchNumber("0.1", 'F32', '0x00000000', '0x200000000');
+                            h5gg.getResults('1', 'F32');
+                            count31 = h5gg.getResultsCount();
+                            r31 = h5gg.getResults(count31);
+                            for (var i = 0; i < count31; i++) {
+                                addr31 = r31[i].address;
+                              h5gg.setValue(addr31, inputq.value, 'F32');
+  h5gg.clearResults()
+                            }
+                     }
+                      else{
+           
+                            
+                        
+                                h5gg.setValue(addr31, inputq.value, 'F32');
+                                
+                            }
+      
+                     };
+</script>
+<br>
+SHOTGUN SPEED  猎枪速度
+<br>
+
+                <input type="range" id="slider9" min="0.001" max="1"style="width:80%"  step="0.001" value="1"
+onchange="SHOTGUNSPEED(this)"/>
+
+            <script>
+function SHOTGUNSPEED(inputq) {
+if (typeof addr31 === 'undefined') {
+  h5gg.clearResults();
+h5gg.searchNumber("-2.5625", 'F32', '0x00000000', '0x200000000');
+        h5gg.searchNearby("1.05", 'F32', '0x100');
+h5gg.searchNumber("1.05", 'F32', '0x00000000', '0x200000000');
+                            h5gg.getResults('1', 'F32');
+                            count31 = h5gg.getResultsCount();
+                            r31 = h5gg.getResults(count31);
+                            for (var i = 0; i < count31; i++) {
+                                addr31 = r31[i].address;
+                              h5gg.setValue(addr31, inputq.value, 'F32');
+  h5gg.clearResults()
+                            }
+                     }
+                      else{
+           
+                            
+                        
+                                h5gg.setValue(addr31, inputq.value, 'F32');
+                                
+                            }
+      
+                     };
+</script>
+  
+  
+  </div>
+
+
+
+     
+    
+    
+    
+      </details>
+  <details type="menu"    >
+     
+       <summary style="background-color: #B8D1F2">连发绘制</summary>
+    <input class="original-button" type="button" value="加载功能" onclick="99()">
+        <input type="range" id="slider8" min="1" max="90" step="0.001" value="90" style="width:67%" />
+
+    
+<front style="position:relative;
+top:-5px;
+             font-weight: 550;    ">角度</front>
+<span id="numvalue8" class="slidercenter" >90.000</span>   
+    
+    
+       
+       
+       
+       
+  
+  
+
+
+  &nbsp&nbsp<input type="range" id="slider100" min="300" max="1500" step="0.001" value="300" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+             font-weight: 550;    ">绘制距离</front>
+<span id="numvalue100" class="slidercenter" >300.000</span>   
+      <br>
+  &nbsp&nbsp<input type="range" id="slider101" min="5" max="20" step="0.001" value="10" style="width:67%" />
+
+<front style="position:relative;
+top:-6px;
+             font-weight: 550;    ">字体大小</front>
+<span id="numvalue101" class="slidercenter" >10.000</span>  
+<div class="mycheckbox">
+
+<input type="button" value="绘制" style='height:35px;width:60px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="f15()">
+ <input type="button" value="射线" style='height:35px;width:60px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="f16()">
+  <input type="button" value="方框" style='height:35px;width:60px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="f17()">
+  <input type="button" value="信息" style='height:35px;width:60px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="f18()">
+  <input type="button" value="死亡下线" style='height:35px;width:60px;border-radius:10px;border:1px solid rgba(155,155,155,.99);background-color: transparent'onclick="f20()">
+   
+  </div>
+
+
+
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+
+  </body> 
+
+
+
+<script>
+  
+  
+			var app = new Vue({
+			el: "#app",
+			data() {
+				return {
+					ifshow: true,
+					tabValue: "one",
+				}
+			},
+			mounted() {
+				setButtonAction(function () {
+					var menu = document.querySelector("#app");
+					if (menu.style.display == 'none') {
+						menu.style.display = 'block';
+						//显示菜单之后, 设置触控不可穿透悬浮窗口
+						setWindowTouch(true);
+					} else {
+						menu.style.display = 'none';
+						//隐藏菜单之后, 设置触控穿透悬浮窗口
+						setWindowTouch(false);
+					}
+				});
+			},
+			methods: {
+				titleTouchStart(event) {
+
+				},
+				
+				titleTouchMove(event) {
+					
+				},
+				changeTab(v) {
+					this.tabValue = v;
+				},
+				closeimgui() {
+					var menu = document.querySelector("#app");
+					menu.style.display = 'none';
+				}
+			}
+		});
+  
+  
+
+  function f15(fps) {
+  var DrawBtn = document.getElementById("DrawSH0");
+  if( window.draw_state == 1)    {
+    window.draw_state = 0;
+   
+    clearCtx();
+  }
+  else {
+      window.draw_state = 1;
+      
+  }
+}
+  function f16() {
+  var DrawBtn = document.getElementById("DrawSH1");
+  if(  window.LineSH == 1 )    {
+    window.LineSH = 0;
+    
+    clearCtx();
+  }
+  else {
+      window.LineSH = 1;
+      
+  }
+}
+
+
+function f17() {
+  var DrawBtn = document.getElementById("DrawSH2");
+  if(  window.BoxSH == 1 )    {
+    window.BoxSH = 0;
+    
+    clearCtx();
+  }
+  else {
+      window.BoxSH = 1;
+      
+  }
+}
+
+function f18() {
+  var DrawBtn = document.getElementById("DrawSH3");
+  if(  window.DisSH == 1 )    {
+    window.DisSH = 0;
+    
+    clearCtx();
+  }
+  else {
+      window.DisSH = 1;
+      
+  }
+}
+
+
+
+  function f20() {
+  var DrawBtn = document.getElementById("DrawSH5");
+  if(  window.DxSH == 1 )    {
+    window.DxSH = 0;
+    
+    clearCtx();
+  }
+  else {
+      window.DxSH = 1;
+      
+  }
+}  
+  
+  
+element1 = document.getElementById('slider1');
+element1.addEventListener('input', f1);
+
+element2 = document.getElementById('slider2');
+element2.addEventListener('input', f2);
+
+element3 = document.getElementById('slider3');
+element3.addEventListener('input', f3);
+
+element4 = document.getElementById('slider4');
+element4.addEventListener('input', f4);
+
+element5 = document.getElementById('slider5');
+element5.addEventListener('input', f5);
+
+
+
+
+
+element8 = document.getElementById('slider8');
+element8.addEventListener('input', f8);
+
+  element100 = document.getElementById('slider100');
+element100.addEventListener('input', disdraw);
+  element101 = document.getElementById('slider101');
+element101.addEventListener('input', sizeup);
+  var X = h5gg.getRangesList('ShooterGame');
+
+            
+
+  
+function f1(){
+
+numvalue1.innerText = Number(element1.value).toFixed(3);
+
+jz2 = Number(X[0].start) + 69007528;
+            jz2 = Number(h5gg.getValue(jz2, 'I64')) + 40; 
+            jz2 = Number(h5gg.getValue(jz2, 'I64')) + 2316; 
+   
+
+
+                                h5gg.setValue(jz2, element1.value * 1, 'F32');
+
+  }
+
+function f2(){
+
+numvalue2.innerText = Number(element2.value).toFixed(3);
+  
+            jz1 = Number(X[0].start) + 68980616;
+            jz1 = Number(h5gg.getValue(jz1, 'I64')) + 16704; 
+            jz1 = Number(h5gg.getValue(jz1, 'I64')) + 136;
+ 
+       
+  h5gg.setValue(jz1, element2.value * 1, 'F32');
+}
+
+function f3(){
+numvalue3.innerText = Number(element3.value).toFixed(3);
+jz3 = Number(X[0].start) + 71669080 ;
+            jz3 = Number(h5gg.getValue(jz3, 'I64')) + 2016; 
+            jz3 = Number(h5gg.getValue(jz3, 'I64')) + 1957; 
+            jz3 = Number(h5gg.getValue(jz3, 'I64')) + 100; 
+    
+h5gg.setValue(jz3, element3.value * 90, 'F32');
+            
+}
+
+function f4(){
+
+numvalue4.innerText = Number(element4.value).toFixed(3);
+jz4 = Number(X[0].start) + 71946856;
+            jz4 = Number(h5gg.getValue(jz4, 'I64')) + 384;  
+            jz4 = Number(h5gg.getValue(jz4, 'I64')) + 1984; 
+            jz4 = Number(h5gg.getValue(jz4, 'I64')) + 2920; 
+ 
+h5gg.setValue(jz4, element4.value * 256, 'F32');
+}
+
+function f5(){
+
+numvalue5.innerText = Number(element5.value).toFixed(3);
+  jz5 = Number(X[0].start) + 69007528;
+  jz5= Number(h5gg.getValue(jz5, 'I64')) + 64;  
+jz5= Number(h5gg.getValue(jz5, 'I64')) + 1504; 
+  
+    
+h5gg.setValue(jz5, element5.value * 1, 'F32');
+      
+}
+
+
+
+
+
+
+
+function f8(){
+
+numvalue8.innerText = Number(element8.value).toFixed(3);
+
+}
+  function disdraw(){
+
+numvalue100.innerText = Number(element100.value).toFixed(3);
+window.dissss = element100.value * 1;
+}
+function sizeup(){
+
+numvalue101.innerText = Number(element101.value).toFixed(3);
+window.sizeppp = element101.value * 1;
+}
+
+  window.dissss = 300 ;
+  window.sizeppp = 10 ;
+          function waterf(){
+            jz6= Number(X[0].start) +0x41cf878;
+  jz6 = Number(h5gg.getValue(jz6, 'I64')) + 0x8;  
+jz6= Number(h5gg.getValue(jz6, 'I64')) + 0x58; 
+  jz6= Number(h5gg.getValue(jz6, 'I64')) + 0x10; 
+  jz6= Number(h5gg.getValue(jz6, 'I64')) + 0x1a0; 
+           
+            
+            
+  
+
+var timer1=setInterval(function(){ 
+
+h5gg.setValue(jz6+4, '5', "I32");
+
+}, 0); 
+          }
+  
+                      
+function huazhi66(){
+if (typeof addr32 === 'undefined') {
+              
+              h5gg.clearResults();
+              h5gg.searchNumber('1.205', 'F32', '0x100000000', '0x160000000');
+              h5gg.getResults("100", "F32");
+              count32 = h5gg.getResultsCount();
+              r32 = h5gg.getResults(count32);
+              for (var i = 0; i < count32; i++) {
+                  addr32 = r32[i].address;
+                  h5gg.setValue(addr32, 999, 'F32');
+                  h5gg.clearResults()
+                  Flags32 = 1
+              }
+          }
+
+          else {
+
+              var test;
+              if (typeof Flags32 === 'undefined') {
+                  for (var i = 0; i < count32; i++) {
+                      addr32 = r32[i].address;
+                      h5gg.setValue(addr32, 999, 'F32');
+                      Flags32 = 1
+                  }
+              } else {
+                  for (var i = 0; i < count32; i++) {
+                      addr32 = r32[i].address;
+                      h5gg.setValue(addr32, 1.205, 'F32');
+                      Flags32 = undefined
+                  }
+              }
+          }
+      }
+
+function anniu76() {
+       h5gg.clearResults();
+       h5gg.searchNumber('17.99', 'F32', '0x00000000', '0x200000000');
+       h5gg.searchNearby('0.34', 'F32', '0x100');
+       h5gg.searchNearby('0.4', 'F32', '0x100');
+       h5gg.searchNearby('0.4', 'F32', '0x100');
+       h5gg.editAll('0.34', 'F32');
+       h5gg.editAll('8', 'F32');
+      
+
+
+
+
+}
+function draw(fps) {
+    window.draw_state = 1;
+    alert("Activate");
+}
+
+
+
+function anniu62() {
+    h5gg.clearResults();
+  h5gg.searchNumber("0.08152", "F32", "0x00000000", "0x200000000");
+  h5gg.searchNearby("0.9", "F32", "0x497");
+  h5gg.searchNearby("0.2", "F32", "0x497");
+  h5gg.searchNearby("1", "F32", "0x497");
+  h5gg.editAll("384299", "F64");
+  h5gg.clearResults();
+ 
+}
+
+function rpgspam() {
+h5gg.searchNumber('1.542857200292', 'F32', '0x100000000', '0x160000000'); 
+h5gg.searchNearby('328', 'F32', '0x50'); 
+h5gg.editAll('0.1', 'F32'); 
+h5gg.clearResults();
+h5gg.searchNumber('3.13828347+273', 'F32', '0x00000000', '0x200000000');
+h5gg.searchNearby('30', 'F32', '0x497'); 
+h5gg.searchNearby('16', 'F32', '0x497'); 
+h5gg.searchNearby('1', 'F32', '0x497');
+h5gg.editAll('30', 'F64'); 
+h5gg.clearResults();
+alert('rpg spam only work with real god console')
+
+    }
+function anniu6() {
+    h5gg.clearResults();
+    h5gg.searchNumber('0.1285700053', 'F32', '0x100000000', '0x160000000'); 
+    h5gg.searchNearby('0.2', 'F32', '0x50'); 
+    h5gg.editAll('10', 'F32');  
+  
+
+}
+
+
+
+
+
+function fpss(inputq) {
+if (typeof addr12 === 'undefined') {
+  h5gg.clearResults();
+ 
+h5gg.searchNumber("-1.70142e+38", 'F32', '0x00000000', '0x400000000');
+h5gg.searchNearby("4.243991582918676e-314", 'F64', '0x100');
+h5gg.searchNearby("30", 'F32', '0x20');
+h5gg.searchNumber("30", 'F32', '0x00000000', '0x200000000');
+h5gg.editAll('120', 'F32');  
+                            
+                count12 = h5gg.getResultsCount();
+                            r12 = h5gg.getResults(count12);
+                            for (var i = 0; i < count12; i++) {
+                                addr12 = r12[i].address;
+                              h5gg.setValue(addr12, inputq.value, 'F32');
+  h5gg.clearResults()
+                            }
+                     }
+                      else{
+           
+                            
+                        
+                                h5gg.setValue(addr12, inputq.value, 'F32');
+                                
+                            }
+      
+                     };
+                     
+function toushi1(){
+if (typeof addr35 === 'undefined') {
+              h5gg.clearResults();
+              h5gg.searchNumber('2.575036587209649e-314', 'F64', '0x100000000', '0x160000000');
+              h5gg.getResults("100", "F64");
+              count35 = h5gg.getResultsCount();
+              r35 = h5gg.getResults(count35);
+              for (var i = 0; i < count35; i++) {
+                  addr35 = r35[i].address;
+                  h5gg.setValue(addr35, 2.716841317300385e-314, 'F64');
+                  h5gg.clearResults()
+                  Flags35 = 1
+              }
+          }
+
+          else {
+
+              var test;
+              if (typeof Flags35 === 'undefined') {
+                  for (var i = 0; i < count35; i++) {
+                      addr35 = r35[i].address;
+                      h5gg.setValue(addr35, 2.716841317300385e-314, 'F64');
+                      Flags35 = 1
+                  }
+              } else {
+                  for (var i = 0; i < count35; i++) {
+                      addr35 = r35[i].address;
+                      h5gg.setValue(addr35, 2.575036587209649e-314, 'F64');
+                      Flags35 = undefined
+                  }
+              }
+          }
+}
+
+function toushi2(){
+if (typeof addr36 === 'undefined') {
+              h5gg.clearResults();
+              h5gg.searchNumber('671152128', 'I32', '0x100000000', '0x160000000');
+              h5gg.getResults("100", "I32");
+              count36 = h5gg.getResultsCount();
+              r36 = h5gg.getResults(count36);
+              for (var i = 0; i < count36; i++) {
+                  addr36 = r36[i].address;
+                  h5gg.setValue(addr36, -1, 'I32');
+                  h5gg.clearResults()
+                  Flags36 = 1
+              }
+          }
+
+          else {
+
+              var test;
+              if (typeof Flags36 === 'undefined') {
+                  for (var i = 0; i < count36; i++) {
+                      addr36 = r36[i].address;
+                      h5gg.setValue(addr36, -1, 'F64');
+                      Flags36 = 1
+                  }
+              } else {
+                  for (var i = 0; i < count36; i++) {
+                      addr36 = r36[i].address;
+                      h5gg.setValue(addr36, 671152128, 'F64');
+                      Flags36 = undefined
+                  }
+              }
+          }
+}
+
+
+
+function toushi4(){
+if (typeof addr36 === 'undefined') {
+              h5gg.clearResults();
+              h5gg.searchNumber('-8.538039785799280e+24', 'F64', '0x100000000', '0x160000000');
+              h5gg.searchNearby('1', 'I32', '0x100');
+              h5gg.searchNearby('1', 'F32', '0x4');
+              h5gg.searchNearby('1', 'I32', '0x4');
+              h5gg.searchNumber('1', 'I32', '0x100000000', '0x160000000');
+              h5gg.getResults("100", "I32");
+              count36 = h5gg.getResultsCount();
+              r36 = h5gg.getResults(count36);
+              for (var i = 0; i < count36; i++) {
+                  addr36 = r36[i].address;
+                  h5gg.setValue(addr36, 12, 'I32');
+                  h5gg.clearResults()
+                  Flags36 = 1
+              }
+          }
+
+          else {
+
+              var test;
+              if (typeof Flags36 === 'undefined') {
+                  for (var i = 0; i < count36; i++) {
+                      addr36 = r36[i].address;
+                      h5gg.setValue(addr36, 12, 'I32');
+                      Flags36 = 1
+                  }
+              } else {
+                  for (var i = 0; i < count36; i++) {
+                      addr36 = r36[i].address;
+                      h5gg.setValue(addr36, 1, 'I32');
+                      Flags36 = undefined
+                  }
+              }
+          }
+}
+
+  
+ function dat4(w){
+  
+if(w.checked==false){
+
+   
+    h5gg.clearResults();
+    
+
+                h5gg.searchNumber('-2373.004', 'F32', '0x100000000', '0x160000000');
+
+                
+   h5gg.getResults('100','0','F32');
+  count71= h5gg.getResultsCount();
+
+     r71=h5gg.getResults(count71);
+     for (var i =0; i<count71;i++){addr71= r71[i].address;
+    
+ 
+    h5gg.setValue(addr71,'1', 'F32');}
+ 
+h5gg.clearResults();
+
+    
+  }else{
+for (var i =0; i<count71;i++){addr71= r71[i].address;
+    
+ 
+    
+                             
+      
+    h5gg.setValue(addr71,'-2373.004', 'F32');}
+				
+
+}}
+  
+
+  
+  function dat2(z){
+
+
+  
+if(z.checked==true){
+    
+  h5gg.clearResults();
+    h5gg.searchNumber('0.1285700053', 'F32', '0x100000000', '0x160000000'); 
+    h5gg.searchNearby('0.2', 'F32', '0x50');   
+    h5gg.searchNumber('0.2', 'F32', '0x100000000', '0x160000000'); 
+  h5gg.getResults('100','0','F32');
+  count133= h5gg.getResultsCount();
+
+     r133=h5gg.getResults(count133);
+     for (var i =0; i<count133;i++){addr133 = r133[i].address;
+    
+ 
+    h5gg.setValue(addr133,30, 'F32');}
+ 
+h5gg.clearResults();
+  
+  
+ 
+  
+    }else{
+   for (var i =0; i<count133;i++){addr133 = r133[i].address;
+
+    
+
+ 
+
+    h5gg.setValue(addr133,30, 'F32');}   
+    
+     
+ 
+			}}
+     
+function dat3(e){
+
+
+
+  
+if(e.checked==true){
+
+   
+    h5gg.clearResults();
+    h5gg.searchNumber('3232863993', 'I32', '0x100000000', '0x160000000'); 
+    h5gg.searchNearby('1', 'F32', '0x10'); 
+    h5gg.searchNumber('1','F32','0x100000000', '0x160000000');
+   h5gg.getResults('100','0','F32');
+  count7 = h5gg.getResultsCount();
+var dat=prompt("输入倍数");
+     r7=h5gg.getResults(count7);
+     for (var i =0; i<count7;i++){addr7 = r7[i].address;
+    
+ 
+    h5gg.setValue(addr7,dat, 'F32');}
+ 
+h5gg.clearResults();
+
+    
+  }else{
+for (var i =0; i<count7;i++){addr7 = r7[i].address;
+    
+ 
+    
+                             
+      
+    h5gg.setValue(addr7,'1', 'F32');}
+				
+
+}}
+
+  
+  
+
+function checkboxclick(input)
+{
+    alert("复选框 = "+input.parentElement.innerText+" = "+input.checked);
+}
+
+
+  function Fzviewf(input)
+{
+if (typeof addr2 === 'undefined'){
+  h5gg.clearResults();
+h5gg.searchNumber("256", 'F32', '0x00000000', '0x200000000');
+h5gg.searchNearby("4", 'I32', '0x20');
+h5gg.searchNearby('0.8', 'F32', '0x20'); 
+h5gg.searchNumber("256", 'F32', '0x00000000', '0x200000000');
+h5gg.getResults('1', 'F32');
+count2 = h5gg.getResultsCount();
+        r2 = h5gg.getResults(count2);
+for (var i = 0; i < count2; i++) {
+          addr2 = r2[i].address;
+h5gg.setValue(addr2, input.value * 256, 'F32');
+h5gg.clearResults()
+}}
+else{
+  h5gg.setValue(addr2, input.value * 256, 'F32');
+}
+};                    
+                                        
+         function yjtl() {
+
+
+h5gg.clearResults();
+h5gg.searchNumber(' 17.99', 'F32', '0x00000000', '0x200000000'); 
+h5gg.searchNearby('0.34', 'F32', '0x100'); 
+h5gg.editAll('8', 'F32');  
+
+
+
+    h5gg.searchNearby('0.4', 'F32', '0x100'); 
+    h5gg.editAll('8', 'F32');  
+    
+h5gg.clearResults();
+
+      }
+  function MySpeedf(input) {numvalue2.innerText = Number(element2.value).toFixed(3);
+                        if (typeof addr3 === 'undefined') {
+                            h5gg.clearResults();
+                            h5gg.searchNumber("-2373.004", 'F32', '0x00000000', '0x200000000');
+                            h5gg.searchNearby("1", 'F32', '0x100');
+                            h5gg.searchNumber("1", 'F32', '0x00000000', '0x200000000');
+                            h5gg.getResults('100', 'F32');
+                            count3 = h5gg.getResultsCount();
+                            r3 = h5gg.getResults(count3);
+                            for (var i = 0; i < count3; i++) {
+                                addr3 = r3[i].address;
+                                h5gg.setValue(addr3, element2.value * 1, 'F32');
+                                h5gg.clearResults()
+                            }
+                        }
+                        else {
+                          
+                            h5gg.setValue(addr3, element2.value * 1, 'F32');
+                        }
+                 }
+                                     
+                                                                                                 
+
+  
+
+
+document.body.addEventListener('touchstart', function () {});
+    
+setWindowDrag(0, 0, 0, 0);
+
+var iosScale = window.devicePixelRatio;
+var sWidth = 0; 
+var sHeight = 0; 
+
+var canvasDom = document.createElement("canvas");
+document.body.appendChild(canvasDom);
+canvasDom.style.height = "100%";
+canvasDom.style.width = "100%";
+
+var layout = function()
+{
+
+    if(window.lastorientation==window.orientation) return;
+    window.lastorientation=window.orientation;
+    
+    if(Math.abs(window.orientation)==90) {
+        setWindowRect(0,0,window.screen.height,window.screen.width);
+        canvasDom.width = window.screen.height * iosScale;
+        canvasDom.height = window.screen.width * iosScale;
+        sWidth = window.screen.height;
+        sHeight = window.screen.width;
+    } else {
+        setWindowRect(0,0,window.screen.width,window.screen.height);
+        canvasDom.height = window.screen.height * iosScale;
+        canvasDom.width = window.screen.width * iosScale;
+        sWidth = window.screen.width;
+        sHeight = window.screen.height;
+    }
+}
+
+layout();
+window.addEventListener("orientationchange", layout, false);
+
+
+
+var ctx = canvasDom.getContext('2d');
+setLineWidth(iosScale);
+var fontFamily =" 'Poppins', sans-serif";
+
+var cacheTimer = null; 
+var drawTimer = null; 
+var actorCache = []; 
+
+var baseAddr = Number(h5gg.getRangesList(0)[0].start); 
+var GWorld = 0; 
+
+function drawCache() {
+    if (isNull(GWorld)) return;
+    var Level = readLong(GWorld + 0x58);
+    var ActorArray = readLong(Level + 0xA0);
+    var ActorCount = readInt(Level + 0xA8);
+
+
+             
+      
+    var tempArr = [];
+    for (var i = 1; i < ActorCount; i++) {
+      
+      
+        var actor = readLong(ActorArray +i * 8);
+
+        var myactor= Number(X[0].start)+0x042514A8;
+          myactor = Number(h5gg.getValue(myactor, 'I64')) + 0x20;  
+
+myactor= Number(h5gg.getValue(myactor, 'I64')) + 0x288; 
+
+  myactor= Number(h5gg.getValue(myactor, 'I64')) + 0x58; 
+
+  myactor= Number(h5gg.getValue(myactor, 'I64')) + 0x0; 
+
+window.myactor=myactor;
+      
+          
+        if (isNull(actor)) continue;
+      
+      
+          if (myactor==actor) continue;
+      
+      var renw=Number(h5gg.getValue(actor, 'I8'))
+var myid= readInt(myactor+0x29c);
+      if(renw==-104 ){
+   
+var hpmax = readFloat(actor + 0xC48);
+
+ 
+      
+      
+          tempArr.push(actor);
+}  }
+    actorCache = tempArr;}
+  
+    
+function shadowDraw() {
+    clearCtx();
+
+    GWorld = readLong(baseAddr + 0x44e9648);
+    if (isNull(GWorld)) return;
+
+				var NetDriver = readLong(GWorld + 0x60);
+				var ServerConnection = readLong(NetDriver + 0x80);
+				var localPlayerController = readLong(ServerConnection + 0x30);
+				var playerCameraManager = readLong(localPlayerController + 0x660);
+				var povAddr = playerCameraManager + 0x16f0 + 0x10;
+				var camViewInfo = {
+					Location: {
+						X: readFloat(povAddr),
+						Y: readFloat(povAddr + 4),
+						Z: readFloat(povAddr + 4 + 4)
+					},
+					Rotation: {
+						Pitch: readFloat(povAddr+0x0c+0x0),
+						Yaw: readFloat(povAddr+0x0c+0x04),
+						Roll: readFloat(povAddr+0x0c+0x08)
+					},
+					FOV: readFloat(povAddr + 0x28)
+				}
+
+				var tempMatrix = RotatorToMatrix(camViewInfo.Rotation);
+
+				var playerCout = 0;
+				for (var i = 0; i < actorCache.length; i++) {
+					var actor = actorCache[i];
+				
+  
+  
+
+					var prhp = readFloat(actor + 0xC44);
+                    var hpmax = readFloat(actor + 0xC48);
+					var rootComponent = readLong(actor + 0x2c8);
+					if (isNull(rootComponent)) continue;
+					var worldPos = {
+						X: readFloat(rootComponent + 0x290),
+						Y: readFloat(rootComponent + 0x290 + 4),
+						Z: readFloat(rootComponent + 0x290 + 4 + 4)
+                      
+					}
+
+
+
+					var distX = (worldPos.X - camViewInfo.Location.X) / 100;
+					var distY = (worldPos.Y - camViewInfo.Location.Y) / 100;
+					var distance = (distX * distX) + (distY * distY);
+					var distZ = (worldPos.Z - camViewInfo.Location.Z) / 100;
+					distance = Math.ceil(Math.sqrt((distZ * distZ) + distance));
+if(distance> window.dissss)continue;
+					var zb1 = {
+						X: worldPos.X,
+						Y: worldPos.Y,
+						Z: worldPos.Z + 80.0
+					}
+					var zb2 = {
+						X: worldPos.X,
+						Y: worldPos.Y,
+						Z: worldPos.Z - 80.0
+					}
+                    
+					var fkzb1 = world2Screen(zb1, camViewInfo, tempMatrix);
+					var fkzb2 = world2Screen(zb2, camViewInfo, tempMatrix);
+					var fkgao = fkzb2.Y - fkzb1.Y;
+					var fkkuan = fkgao / 2;
+                
+					
+
+			var actorInfo = {
+       
+						x: fkzb1.X,
+						y: fkzb1.Y,
+						w: fkkuan,
+						h: fkgao,
+						
+                        
+                        unline:-988528624,
+						dead:0,
+						zt:readInt(actor+0x90),
+						actor:readInt(actor+0x18),
+                       
+                        qi:readInt(actor+0x104),
+                        qi2:1,
+						dis: distance,
+                        
+                        prhp:prhp,
+					};
+					shadowInfo(actorInfo);
+
+					playerCout++;
+				}
+
+    
+drawText(playerCout, sWidth / 2, -10, 37, "red", true);
+}
+
+
+function shadowInfo(objectInfo) {
+    var color = "red";
+  var colort="aqua";
+  var colort3="white";
+  var colort2="#ff9e5c";
+  var colortb="black";
+ 
+  
+  
+  
+  
+
+
+  
+  
+  if (objectInfo.zt==objectInfo.unline){
+  if (objectInfo.qi!=objectInfo.qi2){
+  if (objectInfo.prhp!=objectInfo.dead){
+  if(window.DxSH){
+    drawText("✨"+objectInfo.actor+"["+objectInfo.dis+"m]"+"[HP:"+objectInfo.prhp+"]", objectInfo.x, objectInfo.y - 30, window.sizeppp, colort3,true);
+    
+    
+    
+  }}}}
+  
+  if (objectInfo.prhp==objectInfo.dead){
+    if(window.DxSH)    {
+    drawText("🤡️"+objectInfo.actor+"["+objectInfo.dis+"m]", objectInfo.x, objectInfo.y - 30, window.sizeppp, colort3,true);
+    
+  }}
+
+    
+  if(window.LineSH){
+    drawLine(sWidth / 2, 55, objectInfo.x, objectInfo.y - 15, colort);
+  }
+   if(objectInfo.x<0 || objectInfo.y<0 || objectInfo.x>sWidth || objectInfo.y>sHeight) return;
+    //方框
+    if(window.BoxSH){
+    drawRect(objectInfo.x - objectInfo.w / 2, objectInfo.y, objectInfo.w, objectInfo.h, colort3, false);
+
+
+}
+  
+  
+
+    
+
+    
+
+  
+  
+  
+if(window.DisSH){
+    drawText(objectInfo.actor+"["+objectInfo.dis+"m]"+"[HP:"+objectInfo.prhp+"]" , objectInfo.x, objectInfo.y - 26, 12, color,"height:10px",true);
+
+    
+
+    
+}
+
+ 
+  
+  
+  
+  }
+  
+  
+      
+  
+  
+ 
+  
+
+  
+function clearCtx() {
+    ctx.clearRect(0, 0, canvasDom.width, canvasDom.height);
+}
+
+function setLineWidth(w) {
+    ctx.lineWidth = w;
+}
+
+function drawLine(x1, y1, x2, y2, color) {
+    x1 *= iosScale;
+    y1 *= iosScale;
+    x2 *= iosScale;
+    y2 *= iosScale;
+
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.closePath();
+}
+
+function drawCircle(x, y, r, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    r *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.arc(x, y, r, 0, 2 * Math.PI);
+    if (isFill) {
+        ctx.fill();
+    } else {
+        ctx.stroke();
+    }
+    ctx.closePath();
+}
+
+function drawRect(x, y, w, h, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    w *= iosScale;
+    h *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    if (isFill) {
+        ctx.fillRect(x, y, w, h);
+    } else {
+        ctx.strokeRect(x, y, w, h);
+    }
+    ctx.closePath();
+}
+
+function drawRoundRect(x, y, w, h, r, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    w *= iosScale;
+    h *= iosScale;
+    r *= iosScale;
+
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    if (isFill) {
+        ctx.fill();
+    } else {
+        ctx.stroke();
+    }
+    ctx.closePath();
+}
+
+function drawText(text, x, y, size, color, isFill = true) {
+    x *= iosScale;
+    y *= iosScale;
+    size *= iosScale;
+  ctx.fontweight=9000;
+    ctx.beginPath();
+    ctx.textAlign = "center";
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.font = size + 'px' + fontFamily;
+  
+    if (isFill) {
+        ctx.fillText(text, x, y + size);
+    } else {
+        ctx.strokeText(text, x, y + size);
+    }
+    ctx.closePath();
+};
+
+function readInt(addr) {
+    return Number(h5gg.getValue(addr, "I32"));
+}
+
+function readLong(addr) {
+    return Number(h5gg.getValue(addr, "I64"));
+}
+
+function readFloat(addr) {
+    return Number(h5gg.getValue(addr, "F32"));
+}
+
+function isNull(addr) {
+    return (addr < 0x100000000 || addr > 0x300000000);
+}
+
+function RotatorToMatrix(rotation) {
+    var radPitch = rotation.Pitch * (Math.PI / 180.0);
+    var radYaw = rotation.Yaw * (Math.PI / 180.0);
+    var radRoll = rotation.Roll * (Math.PI / 180.0);
+
+    var SP = Math.sin(radPitch);
+    var CP = Math.cos(radPitch);
+    var SY = Math.sin(radYaw);
+    var CY = Math.cos(radYaw);
+    var SR = Math.sin(radRoll);
+    var CR = Math.cos(radRoll);
+
+    var matrix = new Array(16).fill(0);
+
+    matrix[0] = (CP * CY);
+    matrix[1] = (CP * SY);
+    matrix[2] = (SP);
+    matrix[3] = 0;
+
+    matrix[4] = (SR * SP * CY - CR * SY);
+    matrix[5] = (SR * SP * SY + CR * CY);
+    matrix[6] = (-SR * CP);
+    matrix[7] = 0;
+
+    matrix[8] = (-(CR * SP * CY + SR * SY));
+    matrix[9] = (CY * SR - CR * SP * SY);
+    matrix[10] = (CR * CP);
+    matrix[11] = 0;
+
+    matrix[12] = 0;
+    matrix[13] = 0;
+    matrix[14] = 0;
+    matrix[15] = 1;
+
+    return matrix;
+}
+
+function vectorDot(lhs, rhs) {
+    return (((lhs.X * rhs.X) + (lhs.Y * rhs.Y)) + (lhs.Z * rhs.Z));
+}
+
+function world2Screen(worldLocation, camViewInfo, tempMatrix) {
+    // var tempMatrix = RotatorToMatrix(camViewInfo.Rotation);
+
+    var vAxisX = {
+        X: tempMatrix[0],
+        Y: tempMatrix[1],
+        Z: tempMatrix[2]
+    };
+    var vAxisY = {
+        X: tempMatrix[4],
+        Y: tempMatrix[5],
+        Z: tempMatrix[6]
+    };
+    var vAxisZ = {
+        X: tempMatrix[8],
+        Y: tempMatrix[9],
+        Z: tempMatrix[10]
+    };
+
+    var vDelta = {
+        X: worldLocation.X - camViewInfo.Location.X,
+        Y: worldLocation.Y - camViewInfo.Location.Y,
+        Z: worldLocation.Z - camViewInfo.Location.Z
+    };
+
+    var vTransformed = {
+        X: vectorDot(vDelta, vAxisY),
+        Y: vectorDot(vDelta, vAxisZ),
+        Z: vectorDot(vDelta, vAxisX)
+    };
+
+if (vTransformed.Z < 1.0) {
+
+        vTransformed.Z = 1.0;
+
+    }
+
+    var fov = camViewInfo.FOV;
+    var screenCenterX = (sWidth / 2.0);
+    var screenCenterY = (sHeight / 2.0);
+
+    var re = {
+        X: (screenCenterX + vTransformed.X * (screenCenterX / Math.tan(fov * (Math.PI /360))) /
+            vTransformed
+            .Z),
+        Y: (screenCenterY - vTransformed.Y * (screenCenterX / Math.tan(fov * (Math.PI / 360))) /
+            vTransformed
+            .Z)
+    };
+
+    return re;
+}
+    
+    
+cacheTimer = setInterval(function() {
+    drawCache();
+}, 1000);
+drawTimer = setInterval(function() {
+    if(window.draw_state)
+    {
+        shadowDraw();
+      
+        if(!window.fpscount) window.fpscount=0;
+        if(!window.fpstime) window.fpstime=performance.now();
+        window.fpscount++;
+        if((performance.now()-window.fpstime)>2000)
+        {
+            window.fps = window.fpscount;
+            window.fpstime = performance.now();
+            window.fpscount = 0;
+        }
+        ctx.textBaseline="top";
+        ctx.textAlign="center";
+        ctx.font='0px "Arial, sans-serif"';
+        ctx.fillStyle="red";
+        if(window.fps) ctx.fillText(window.fps, 80, 30);
+    }
+}, 15);
+  
+   
+    
+     
+       function nb666() {
+   alert("耐心等待，请确保身边有99炮");
+
+ 	h5gg.clearResults();
+	h5gg.searchNumber('1088784512', 'I32', '0x00000000', '0x200000000');
+	h5gg.searchNearby('12', 'I32', '0x8');
+	h5gg.searchNumber('1088784512', 'I32', '0x00000000', '0x400000000');
+	count = h5gg.getResultsCount();
+	a = h5gg.getResults(count);
+	for (var i = 0; i < count; i++) {//ここで自分の位置を出力する
+		addr = a[i].address;
+		addr2 = addr - -0x4C
+		addrplx3 = "0x" + addr2.toString(16)
+		plxva2 = h5gg.getValue(addrplx3, "F32") //x座標
+		if ((plxva2 != 1.14794e-41)
+			&& (plxva2 != 1.4013e-45)
+			&& (plxva2 != 0)
+			&& (plxva2 <= 342300)
+			&& (plxva2 >= -342300)) {
+			addrplx2 = addrplx3 - -0x0
+			addrplx1 = "0x" + addrplx2.toString(16)
+			addrply2 = addrplx3 - -0x4
+			addrply1 = "0x" + addrply2.toString(16)
+			addrplz2 = addrplx3 - -0x8
+			addrplz1 = "0x" + addrplz2.toString(16)
+			plxva = h5gg.getValue(addrplx1, "F32") //x座標
+			plyva = h5gg.getValue(addrply1, "F32") //y座標
+			plzva = h5gg.getValue(addrplz1, "F32") //z座
+
+
+}
+   
+   }
+
+	
+
+
+
+				
+				h5gg.clearResults();
+				h5gg.searchNumber('1074020928', 'I32', '0x00000000', '0x400000000');
+				h5gg.searchNearby("1", 'F32', '0x50');
+				h5gg.searchNumber("1", 'F32', '0x00000000', '0x400000000');
+				h5gg.editAll("30", 'F32');
+				h5gg.clearResults();
+				h5gg.searchNumber('-2052', 'F32', '0x00000000', '0x400000000');
+				h5gg.searchNearby("1", 'F32', '0x50');
+				h5gg.searchNumber("1", 'F32', '0x00000000', '0x400000000');
+             h5gg.editAll("30", 'F32');
+			
+   			h5gg.clearResults();
+			h5gg.searchNumber('66014', 'I32', '0x00000000', '0x400000000'); 
+			h5gg.searchNearby('2097152', 'I32', '0x300');
+			h5gg.setFloatTolerance('400');
+			plxva = h5gg.getValue(addrplx1, "F32");
+			plyva = h5gg.getValue(addrply1, "F32");
+			plzva = h5gg.getValue(addrplz1, "F32");
+			h5gg.searchNearby(plxva, 'F32', '0x300');
+			h5gg.searchNearby(plyva, 'F32', '0x20');
+			h5gg.searchNumber(plxva, 'F32', '0x00000000', '0x400000000');
+			count1 = h5gg.getResultsCount();
+			b = h5gg.getResults(count1);
+			for (var i = 0; i < count1; i++) {//ロケ砲座標保存 x,y,z
+              
+			rtaddrx1 = b[i].address;
+			rtaddry2 = rtaddrx1 - -0x4;
+			rtaddry1 = "0x" + rtaddry2.toString(16);
+			rtaddrz2 = rtaddrx1 - -0x8;
+			rtaddrz1 = "0x" + rtaddrz2.toString(16);
+			
+			
+              
+              
+            }
+alert("初始化完成");
+}
+  
+  
+  
+  
+  
+</script>
+
+
+
+</div>
+</div>
+</div>
+</body>
